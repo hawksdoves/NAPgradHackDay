@@ -73,7 +73,13 @@ function getPid(){
       var currentDay = weeklyDailyStatus[i];
       var weatherStatus = WEATHER_RECOMMENDATIONS[currentDay[1]];
       var wetStatus = WEATHER_RECOMMENDATIONS[currentDay[0]];
-      var combinedWeatherRec = weatherStatus.concat(wetStatus);
+      var combinedWeatherRec = [];
+      if(typeof wetStatus != 'undefined'){
+        combinedWeatherRec = weatherStatus.concat(wetStatus);
+      } else {
+        combinedWeatherRec = weatherStatus;
+      }
+      // console.log(combinedWeatherRec);
       var pidIndex = _getRandomNumber(0, combinedWeatherRec.length-1);
       while(pidArray.includes(combinedWeatherRec[pidIndex])){
           pidIndex = _getRandomNumber(0, combinedWeatherRec.length-1); 
