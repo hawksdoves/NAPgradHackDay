@@ -24,6 +24,8 @@ var weather = new Weather();
 
 var weatherStatus = [];
 
+var pidArray = [];
+
 function getLocation() {
 	if (navigator.geolocation) {
 
@@ -61,6 +63,7 @@ function _getWeatherData(lat, lon){
 			productResponse.json().then(function(productData){
 
         weeklyClimates(productData.list);
+        getPid();
 
 			});
 		}
@@ -68,7 +71,6 @@ function _getWeatherData(lat, lon){
 }
 
 function getPid(){
-  var pidArray = [];
   for (var i = 0; i < weeklyDailyStatus.length; i++) {
       var currentDay = weeklyDailyStatus[i];
       var weatherStatus = WEATHER_RECOMMENDATIONS[currentDay[1]];
@@ -89,7 +91,7 @@ function getPid(){
       // call api with pid
       // return price and image
   }
-  return pidArray;
+  //return pidArray;
 }
 
 function _getRandomNumber(min, max) {
