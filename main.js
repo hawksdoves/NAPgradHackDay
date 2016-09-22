@@ -1,7 +1,28 @@
-
 getLocation();
 
+function Weather(){
+  this.WEATHERTYPES = {
+    "Shower rain": "wet",
+    "Rain": "wet",
+    "Thunderstorm": "wet",
+    "Snow": "wet"
+  };
+  this.COLD_THRESHOLD = 12;
+  this.MILD_THRESHOLD = 20;
+}
+
+var WEATHER_RECOMMENDATIONS = {
+  "wet": [752748,752747, 705403],
+  "warm": [746398, 571849, 379616, 746401, 756324, 691457, 714171, 734229, 736778],
+  "mild": [743503, 743508, 734221, 743499, 750928, 750931, 705061, 731847],
+  "cold": [755539, 728156, 734223, 643303, 683724, 683724, 742198, 713587, 715078]
+}
+
 var weeklyDailyStatus = [];
+
+var weather = new Weather();
+
+var weatherStatus = [];
 
 function getLocation() {
 	if (navigator.geolocation) {
@@ -46,21 +67,9 @@ function _getWeatherData(lat, lon){
 	)
 }
 
-function Weather(){
-  this.WEATHERTYPES = {
-    "Shower rain": "wet",
-    "Rain": "wet",
-    "Thunderstorm": "wet",
-    "Snow": "wet"
-  };
-  this.COLD_THRESHOLD = 12;
-  this.MILD_THRESHOLD = 20;
-}
-
-var weather = new Weather();
 
 
-var weatherStatus = [];
+
 
 function weeklyClimates(weeklyWeatherArr) {
   var arrayLength = weeklyWeatherArr.length;
