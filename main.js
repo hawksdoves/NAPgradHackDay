@@ -1,7 +1,30 @@
-
 getLocation();
 
+function Weather(){
+  this.WEATHERTYPES = {
+    "Shower rain": "wet",
+    "Rain": "wet",
+    "Thunderstorm": "wet",
+    "Snow": "wet"
+  };
+  this.COLD_THRESHOLD = 12;
+  this.MILD_THRESHOLD = 20;
+}
+
+var WEATHER_RECOMMENDATIONS = {
+  "wet": [752748,752747, 705403],
+  "warm": [746398, 571849, 379616, 746401, 756324, 691457, 714171, 734229, 736778],
+  "mild": [743503, 743508, 734221, 743499, 750928, 750931, 705061, 731847],
+  "cold": [755539, 728156, 734223, 643303, 683724, 683724, 742198, 713587, 715078]
+}
+
 var weeklyDailyStatus = [];
+
+var weather = new Weather();
+
+var weatherStatus = [];
+
+var pidArray = [];
 
 function getLocation() {
 	if (navigator.geolocation) {
@@ -40,27 +63,40 @@ function _getWeatherData(lat, lon){
 			productResponse.json().then(function(productData){
 
         weeklyClimates(productData.list);
+        getPid();
 
 			});
 		}
 	)
 }
 
-function Weather(){
-  this.WEATHERTYPES = {
-    "Shower rain": "wet",
-    "Rain": "wet",
-    "Thunderstorm": "wet",
-    "Snow": "wet"
-  };
-  this.COLD_THRESHOLD = 12;
-  this.MILD_THRESHOLD = 20;
+function getPid(){
+  for (var i = 0; i < weeklyDailyStatus.length; i++) {
+      var currentDay = weeklyDailyStatus[i];
+      var weatherStatus = WEATHER_RECOMMENDATIONS[currentDay[1]];
+      var wetStatus = WEATHER_RECOMMENDATIONS[currentDay[0]];
+      var combinedWeatherRec = [];
+      if(typeof wetStatus != 'undefined'){
+        combinedWeatherRec = weatherStatus.concat(wetStatus);
+      } else {
+        combinedWeatherRec = weatherStatus;
+      }
+      // console.log(combinedWeatherRec);
+      var pidIndex = _getRandomNumber(0, combinedWeatherRec.length-1);
+      while(pidArray.includes(combinedWeatherRec[pidIndex])){
+          pidIndex = _getRandomNumber(0, combinedWeatherRec.length-1); 
+      }
+
+      pidArray.push(combinedWeatherRec[pidIndex]);
+      // call api with pid
+      // return price and image
+  }
+  //return pidArray;
 }
 
-var weather = new Weather();
-
-
-var weatherStatus = [];
+function _getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
 
 function weeklyClimates(weeklyWeatherArr) {
   var arrayLength = weeklyWeatherArr.length;
