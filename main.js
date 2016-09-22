@@ -67,9 +67,28 @@ function _getWeatherData(lat, lon){
 	)
 }
 
+function getPid(){
+  var pidArray = [];
+  for (var i = 0; i < weeklyDailyStatus.length; i++) {
+      var currentDay = weeklyDailyStatus[i];
+      var weatherStatus = WEATHER_RECOMMENDATIONS[currentDay[1]];
+      var wetStatus = WEATHER_RECOMMENDATIONS[currentDay[0]];
+      var combinedWeatherRec = weatherStatus.concat(wetStatus);
+      var pidIndex = _getRandomNumber(0, combinedWeatherRec.length-1);
+      while(pidArray.includes(combinedWeatherRec[pidIndex])){
+          pidIndex = _getRandomNumber(0, combinedWeatherRec.length-1); 
+      }
 
+      pidArray.push(combinedWeatherRec[pidIndex]);
+      // call api with pid
+      // return price and image
+  }
+  return pidArray;
+}
 
-
+function _getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
 
 function weeklyClimates(weeklyWeatherArr) {
   var arrayLength = weeklyWeatherArr.length;
