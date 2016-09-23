@@ -74,7 +74,7 @@ function loadImage(elementClass, details){
   console.log(elementClass);
   console.log(details.url);
   $carouselSlide.children("img").attr("src", details.imgUrl).wrap('<a href="'+ details.url +'" target="_blank"/>');
-  $carouselSlide.children("div.carousel-caption").html("<p>" + details.price + "</p>" + "<p>" + details.name + "</p>");
+  $carouselSlide.children("div.carousel-caption").html("<p>" + details.day + "</p>" + "<p>" + details.price + "</p>" + "<p>" + details.name + "</p>");
 }
 
 function getProductDetails(pidsArray){
@@ -82,6 +82,19 @@ function getProductDetails(pidsArray){
   console.log(url);
   var urlTemplate = "https://www.net-a-porter.com/gb/en/product/";
   jQuery.getJSON(url, function(data){
+
+      var d = new Date();
+      var day = d.getDay();
+      var weekday = new Array(7);
+      weekday[0]=  "Sunday";
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+
+      var n = weekday[d.getDay()]; 
     
     for(let product of data.summaries){
       let productDetail = {};
@@ -90,6 +103,9 @@ function getProductDetails(pidsArray){
       productDetail.brand = product.brandId;
       productDetail.imgUrl = product.images.urlTemplate.replace("{{scheme}}", "http:").replace("{{shot}}", "in").replace("{{size}}", "l");
       productDetail.url = urlTemplate + product.id;
+      productDetail.day = weekday[day];
+      day += 1;
+      day %= 7;
       console.log(productDetail);
       products.push(productDetail);
     }
