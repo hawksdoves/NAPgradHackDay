@@ -1,0 +1,18 @@
+img {
+		padding-top: 40px;
+		margin: auto;
+
+}
+body {
+	text-align: center;
+}
+
+div#carousel-example-generic{
+	width: 90%;
+	margin: 20px auto;
+}
+
+div.carousel-caption>p{
+	padding-bottom: 100px;
+	text-decoration-color: black; 
+}

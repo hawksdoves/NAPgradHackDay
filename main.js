@@ -73,8 +73,8 @@ function loadImage(elementClass, details){
   var $carouselSlide = $("." + elementClass);
   console.log(elementClass);
   console.log(details.url);
-  $carouselSlide.children("img").attr("src", details.imgUrl).wrap('<a href="'+ details.url +'" />');
-  $carouselSlide.children("div.carousel-caption").html(details.price);
+  $carouselSlide.children("img").attr("src", details.imgUrl).wrap('<a href="'+ details.url +'" target="_blank"/>');
+  $carouselSlide.children("div.carousel-caption").html("<p>" + details.price + "</p>" + "<p>" + details.name + "</p>");
 }
 
 function getProductDetails(pidsArray){
@@ -85,9 +85,10 @@ function getProductDetails(pidsArray){
     
     for(let product of data.summaries){
       let productDetail = {};
-      productDetail.price = product.price.amount;
+      productDetail.name = product.name
+      productDetail.price = "£" + product.price.amount/100;
       productDetail.brand = product.brandId;
-      productDetail.imgUrl = product.images.urlTemplate.replace("{{scheme}}", "http:").replace("{{shot}}", "cu").replace("{{size}}", "xl");
+      productDetail.imgUrl = product.images.urlTemplate.replace("{{scheme}}", "http:").replace("{{shot}}", "in").replace("{{size}}", "l");
       productDetail.url = urlTemplate + product.id;
       console.log(productDetail);
       products.push(productDetail);
