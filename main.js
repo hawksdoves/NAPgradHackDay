@@ -60,7 +60,7 @@ function showError(error) {
 }
 
 function _getWeatherData(lat, lon){
-		fetch('http://api.openweathermap.org/data/2.5/forecast/city?lat=' + lat + '&lon=' + lon + '&APPID=73d75b47f73a3e213e08d898e79c7c2d&cnt=7&units=metric').then(
+		fetch('http://api.openweathermap.org/data/2.5/forecast/city?lat=' + lat + '&lon=' + lon + '&APPID={API KEY HERE}&cnt=7&units=metric').then(
 		function(productResponse){
 			productResponse.json().then(function(productData){
 
